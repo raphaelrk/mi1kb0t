@@ -36,5 +36,56 @@ module.exports = {listeners: [
 		var index = parseInt(hash.substr(0, 1), 16);
 		reply(messages[index]);
 	}
+}, {
+	type: "regex",
+	query: /^Magic conch/i,
+	callback: function(reply, message){
+		if(message.body.length <= 11)
+			return reply("Ask the magic conch shell a question! Usage: .8 <question>");
+
+		var messages = [
+			"Maybe someday.",
+			"I don't think so.",
+			"No.",
+			"Yes.",
+		];
+
+		var generic = [
+			"Follow the seahorse.",
+			"Try asking again."
+		]
+
+		var decision = message.body.match(/(Should.*or|or.*Should)|which/i);
+		var action = message.body.match(/what.*do|do.*what/i);
+		var canSquidward = message.body.match(/Can.*Squidward/i);
+
+		// "what to do?"
+		if(action) {
+			reply("Nothing.")
+		}
+
+		else {
+			// "which"? Neither. or generic
+			if(decision) {
+				var neither = ["Neither.", "Neither."];
+				generic = generic.concat(neither);
+			}
+
+			// can squidward have some krabby patty?
+			if(canSquidward) {
+				var no = ["No.", "No."];
+				generic = generic.concat(no);
+			}
+
+			else {
+				generic = generic.concat(messages);
+			}
+			
+			var str = message.body + message.thread_id + process.env.PATH;
+			var hash = crypto.createHash('md5').update(str).digest('hex');
+			var index = parseInt(hash.substr(0, 1), 16);
+			reply(generic[index % generic.length]);
+		}
+	}
 }
 ]};

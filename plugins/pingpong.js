@@ -4,7 +4,7 @@ var request = require('request');
 module.exports = {listeners: [
 {
 	type: "equals",
-	query: ".woo",
+	query: "woo",
 	callback: function(reply){
 		reply("WOOOOOOOOOOOOO!");
 	}
@@ -62,6 +62,76 @@ module.exports = {listeners: [
 			else
 				reply("YOU'RE " + match[1] + ".");
 		}
+	}
+}, 
+
+/* 
+ * Here begins scripts I wrote
+ */
+
+  {
+	type: "equals",
+	query: "ok",
+	callback: function(reply){
+		reply("thanks for letting us know");
+	}
+}, {
+	type: "regex",
+	query: /Sweet Caroline/i,
+	callback: function(reply){
+		reply("BAA BAA BUHH");
+	}
+}, {
+	type: "regex",
+	query: /Ralphie where were you\?|Where was Ralphie\?/i,
+	callback: function(reply){
+		reply("sleeping");
+	}
+}, {
+	type: "regex",
+	query: /Ralphie(,)? (what's your|what is your|do you have a) favo(u)?rite colo(u)?r/i,
+	callback: function(reply, message){
+		var messages = [
+			"I see things black and white",
+			"The same one as you",
+			"A mix between red and yellow. Redyellow?",
+			"Color?! What matters is TEXTURE and CONTEXT!",
+			"Can't say, shot my eye out :("
+		];
+
+		reply(messages[Math.floor(Math.random() * messages.length)]);
+
+	}
+}, {
+	type: "regex",
+	query: /What('s| is) the answer to (life|the universe|everything)/i,
+	callback: function(reply, message){
+		reply("42");
+	}
+}, {
+	type: "regex",
+	query: /nothing(\.)?/i,
+	callback: function(reply, message){
+		reply("");
+	}
+}, {
+	type: "regex",
+	query: /nothing!/i,
+	callback: function(reply, message){
+		reply("");
+		reply("");
+	}
+}, {
+	type: "regex",
+	query: /(^help$)|(^man ralphie$)/i,
+	callback: function(reply, message){
+		
+	}
+}, {
+	type: "regex",
+	query: /^(hello|hey|yo|sup|hi|the fuck is up|aye|shalom)((,)? Ralphie)?$/i,
+	callback: function(reply, message){
+		reply("yo");
 	}
 }
 ]};

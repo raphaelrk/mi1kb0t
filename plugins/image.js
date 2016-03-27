@@ -18,6 +18,11 @@ module.exports = {listeners: [
 		var error = function(code, msg){
 			console.log(msg);
 			reply({attachment: request("https://http.cat/" + code + ".jpg")});
+			if(code == 509) {
+				reply("the image-fetching feature has been rate limited, "+
+					  "which means you'll have to wait up to 24 hours before "+
+					  "it can be used again.");
+			}
 		};
 
 		// Exclude URLs
